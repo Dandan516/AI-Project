@@ -1,10 +1,13 @@
 import gradio as gr
-from gemini_ai import classify
+import pandas as pd
+from gemini_ai import match
 
 interface = gr.Interface(
-    fn=classify,
-    inputs=["text"],
-    outputs=["text"],
+    title="Product suggestion AI",
+    description="Tell our AI what you need!", 
+    fn=match,
+    inputs="text",
+    outputs="text",
 )
 
 interface.launch()

@@ -1,0 +1,16 @@
+user_prompt,output,flag,username,timestamp
+I want to buy some clothes,"          ProductName   Category  ...   DateAdded        City
+ProductID                         ...                        
+41             Jacket   Clothing  ...  2023-09-30  Harrisburg
+42             Jacket   Clothing  ...  2024-02-19    Portland
+43            Sweater   Clothing  ...  2024-02-29     Spokane
+44            T-Shirt   Clothing  ...  2024-05-30       Ogden
+45            Sweater   Clothing  ...  2024-01-22    San Juan
+...               ...        ...  ...         ...         ...
+876           Panties  Underwear  ...  2023-12-23  Birmingham
+877            Boxers  Underwear  ...  2023-07-11       Tampa
+878            Boxers  Underwear  ...  2023-09-10  Washington
+879            Boxers  Underwear  ...  2023-07-23     Phoenix
+880           Panties  Underwear  ...  2023-11-28    San Juan
+
+[120 rows x 10 columns]",,,2024-09-13 02:20:21.759353
