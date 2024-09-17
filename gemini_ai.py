@@ -3,9 +3,9 @@ import os
 import google.generativeai as genai
 # from dotenv import load_dotenv
 
-def classify(user_prompt: str, df: pd.DataFrame) -> str:
+def ask_gemini(user_prompt: str, df: pd.DataFrame) -> str:
     '''
-    Analyzes user prompt and suggests related categories from the list of categories accordingly.
+    Returns the categories that might be related to the user's prompt in a comma-separated string.
     '''
     # load_dotenv()
     api_key = os.environ["GEMINI_API_KEY"]
@@ -24,16 +24,15 @@ def classify(user_prompt: str, df: pd.DataFrame) -> str:
     
     return response._result.candidates[0].content.parts[0].text
 
-def match(user_prompt: str):
+def match_categories(user_prompt: str) -> pd.DataFrame:
     '''
-    Calls classify()
+    Returns a list of products that might be related to the user's prompt.
     '''
     df = pd.read_csv('https://raw.githubusercontent.com/Dandan516/AI-Project/main/ecommerce_product_dataset.csv',index_col = 0)
     
-    
     print("User prompt is \'" + user_prompt + "\'")
     
-    matching_categories = [x.strip() for x in classify(user_prompt, df).split(sep=",")]
+    matching_categories = [x.strip() for x in ask_gemini(user_prompt, df).split(sep=",")]
     matching_products = pd.DataFrame({})
     
     for x in matching_categories:
@@ -43,5 +42,5 @@ def match(user_prompt: str):
 
 if __name__ == "__main__":
     user_prompt = "I want to drink"
-    match(user_prompt)
+    match_categories(user_prompt)
 
