@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import google.generativeai as genai
 
-def ask_gemini(user_prompt: str, df: pd.DataFrame) -> str:
+def categorize(user_prompt: str, df: pd.DataFrame) -> str:
     '''
     Returns the categories that might be related to the user's prompt in a comma-separated string.
     '''
@@ -22,21 +22,22 @@ def ask_gemini(user_prompt: str, df: pd.DataFrame) -> str:
     
     return response._result.candidates[0].content.parts[0].text
 
-def match_categories(user_prompt: str) -> pd.DataFrame:
+def find_products(user_prompt: str) -> pd.DataFrame:
     '''
     Returns a list of products that might be related to the user's prompt.
     '''
     df = pd.read_csv('https://raw.githubusercontent.com/Dandan516/AI-Project/main/ecommerce_product_dataset.csv',index_col = 0)
     
     print("User prompt is \'" + user_prompt + "\'")
-    #turn into list, delete the white spaces,  e.g. [A, B]
-    matching_categories = [x.strip() for x in ask_gemini(user_prompt, df).split(sep=",")]
+    
+    # Turn into list, delete the white spaces,  e.g. [A, B]
+    matching_categories = [x.strip() for x in categorize(user_prompt, df).split(sep=",")]
     matching_products = pd.DataFrame({})
-    #find the category match the response in the data and concatenate each category together 
+    
+    # Find the category match the response in the data and concatenate each category together 
     for x in matching_categories:
         matching_products = pd.concat([matching_products, df.query("Category == @x")])
 
-    
     return matching_products
 
 
