@@ -5,7 +5,6 @@ import random
 from dotenv import load_dotenv
 import numpy as np
 
-
 load_dotenv()
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
@@ -41,7 +40,7 @@ def find_products(user_prompt: str) -> pd.DataFrame:
     # Turn into list, delete the white spaces,  e.g. [A, B]
     matching_categories = [x.strip() for x in categorize(user_prompt, df).split(sep=",")]
     matching_products = pd.DataFrame({})
-    result_df= pd.DataFrame({})
+    result_df = pd.DataFrame({})
 
     # Find the category match the response in the data and concatenate each category together 
     for x in matching_categories:

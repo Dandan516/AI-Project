@@ -1,5 +1,4 @@
 import gradio as gr
-import pandas as pd
 import time
 from product_suggestion import find_products
 
