@@ -32,7 +32,7 @@ def categorize(user_prompt: str, df: pd.DataFrame) -> str:
 def find_products(user_prompt: str) -> pd.DataFrame:
     
     '''
-    Returns a list of ppproducts that might be related to the user's prompt.
+    Returns a list of products that might be related to the user's prompt.
     '''
     df = pd.read_csv('https://raw.githubusercontent.com/Dandan516/AI-Project/main/ecommerce_product_dataset.csv',index_col = 0)
     
@@ -41,25 +41,17 @@ def find_products(user_prompt: str) -> pd.DataFrame:
     # Turn into list, delete the white spaces,  e.g. [A, B]
     matching_categories = [x.strip() for x in categorize(user_prompt, df).split(sep=",")]
     matching_products = pd.DataFrame({})
-    result_df= pd.DataFrame({})
 
     # Find the category match the response in the data and concatenate each category together 
     for x in matching_categories:
         matching_products = pd.concat([matching_products, df.query("Category == @x")])
     
-    #find the (item name)index of filtered columns that are greater than 2
     product_counts = matching_products['ProductName'].value_counts()
-    index_morethan2rows = product_counts[product_counts >= 2].index
-    index_singlerow = product_counts[product_counts == 1].index
-    
-    #filter the row with single column and the colums that is more than 2
-    filtered_single_row = matching_products[matching_products['ProductName'].isin(index_singlerow)]
-    filtered_multiple_rows = matching_products[matching_products['ProductName'].isin(index_morethan2rows)]
-    group = filtered_multiple_rows.groupby('ProductName')
-
-    #randomly select 2 rows the same product name with 2 or more occurrences
-    atmost2row = group.apply(lambda x: x.sample(n=2) if len(x) >= 2 else x).reset_index(drop=True)
-    result_df = pd.concat([atmost2row, filtered_single_row], ignore_index=True)
+    atmost2rows = product_counts[product_counts >= 2].index
+    products_with_single_row = product_counts[product_counts == 1].index
+    filtered_df_single_row = matching_products[matching_products['ProductName'].isin(products_with_single_row)]
+    result_df_multiple_rows = atmost2rows.groupby('ProductName').apply(lambda x: x.sample(n=min(len(x), 2)))
+    result_df = pd.concat([result_df_multiple_rows, filtered_df_single_row], ignore_index=True)
 
     return result_df
 
