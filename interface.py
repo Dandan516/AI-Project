@@ -18,4 +18,4 @@ with gr.Blocks() as interface:
     btn.click(fn=show_outputs, outputs=result)
     btn.click(fn=get_result, inputs=user_input, outputs=result)
 
-interface.launch()
+interface.launch(share=True)
