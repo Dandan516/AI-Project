@@ -1,4 +1,4 @@
-https://d-9067eff8a9.awsapps.com/start
+pip install -r requirements.txt
 
 Sentiment analysis
 Image c
