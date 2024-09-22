@@ -1,4 +1,6 @@
+```
 pip install -r requirements.txt
+```
 
 Sentiment analysis
 Image c
